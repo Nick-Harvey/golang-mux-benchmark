@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/codegangsta/martini"
@@ -58,7 +57,6 @@ func gocraftWebRouterFor(namespaces []string, resources []string) http.Handler {
 			subrouter.Delete("/"+res+"/:id", (*BenchContext).Action)
 		}
 	}
-	http.ListenAndServe(os.Getenv("OPENSHIFtwetT_GO_IP")+":"+os.Getenv("OPENSHIFT_GO_PORT"), router)
 	return router
 }
 
@@ -72,8 +70,6 @@ func BenchmarkGocraftWeb_Simple(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		router.ServeHTTP(rw, req)
 	}
-
-	http.ListenAndServe(os.Getenv("OPENSHIFT_GO_IP")+":"+os.Getenv("OPENSHIFT_GO_PORT"), router)
 }
 
 func BenchmarkGocraftWeb_Route15(b *testing.B) {
