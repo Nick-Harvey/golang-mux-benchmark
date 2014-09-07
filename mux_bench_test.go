@@ -3,15 +3,17 @@ package mux_bench_test
 import (
 	"crypto/sha1"
 	"fmt"
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"testing"
+
 	"github.com/codegangsta/martini"
 	"github.com/gocraft/web"
 	"github.com/gorilla/mux"
 	"github.com/pilu/traffic"
 	"github.com/rcrowley/go-tigertonic"
-	"io"
-	"net/http"
-	"net/http/httptest"
-	"testing"
 )
 
 //
@@ -56,6 +58,7 @@ func gocraftWebRouterFor(namespaces []string, resources []string) http.Handler {
 			subrouter.Delete("/"+res+"/:id", (*BenchContext).Action)
 		}
 	}
+	http.ListenAndServe(os.Getenv("OPENSHIFtwetT_GO_IP")+":"+os.Getenv("OPENSHIFT_GO_PORT"), router)
 	return router
 }
 
@@ -69,6 +72,8 @@ func BenchmarkGocraftWeb_Simple(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		router.ServeHTTP(rw, req)
 	}
+
+	http.ListenAndServe(os.Getenv("OPENSHIFT_GO_IP")+":"+os.Getenv("OPENSHIFT_GO_PORT"), router)
 }
 
 func BenchmarkGocraftWeb_Route15(b *testing.B) {
