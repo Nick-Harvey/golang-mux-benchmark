@@ -9,4 +9,6 @@ echo "getting tigertonic"
 go get "github.com/rcrowley/go-tigertonic"
 echo "getting traffic" 
 go get "github.com/pilu/traffic"
+echo "getting codegangsta martini"
+go get "github.com/codegangsta/martini"
 
